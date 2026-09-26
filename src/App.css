@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  display: grid;
+  justify-content: center;
   font-family:  sans-serif;
 }
 

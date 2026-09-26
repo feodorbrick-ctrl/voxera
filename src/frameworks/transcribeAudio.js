@@ -2,11 +2,11 @@ import { pipeline } from "@huggingface/transformers";
 
 let transcriber = null;
 
-async function getTranscriber() {
+async function getTranscriber(transcribeMode) {
     if (!transcriber) {
         transcriber = await pipeline(
             "automatic-speech-recognition",
-            "Xenova/whisper-base",
+            `Xenova/whisper-base`,
             {
                 device: "wasm"
             }

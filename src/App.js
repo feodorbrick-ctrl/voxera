@@ -12,6 +12,7 @@ function App() {
     const [isVisibleError, setVisibleError] = useState(false);
     const [transcription, setTranscription] = useState('');
     const [language, setLanguage] = useState('russian')
+    const [transcribeMode, setTranscribeMode] = useState('base');
 
     function handleFileChange(event) {
         const selectedFile = event.target.files[0];
@@ -50,10 +51,12 @@ function App() {
                 await setTranscription(transcribeAudioFun())
 
             }
+        } else {
+            setVisibleError(true)
+            setTimeout(() => setVisibleError(false), 2000)
         }
         setState("rejected");
     }
-
     useEffect(() => {
         setSpinner(state === "pending");
         if (state === "fulfilled") {
@@ -93,12 +96,23 @@ function App() {
                 <h1>some error</h1>
             }
             <h1>{transcription}</h1>
+            <br/><br/>
             <CustomSelect
                 onChange={setLanguage}
                 placeholder='Select please a language of subtitles'
                 value={language}
                 options={languages}
             />
+            <br/>
+            <br/>
+            <div>
+                <p>the fast, the less effective</p>
+                <CustomSelect
+                    onChange={setTranscribeMode}
+                    value={transcribeMode}
+                    options={['tiny', 'base', 'small', 'medium']}
+                />
+            </div>
         </div>
     );
 }

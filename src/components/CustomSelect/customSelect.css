@@ -39,7 +39,7 @@
     scroll-snap-type: y mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    height: 800px;
+    max-height: 300px;
     position: absolute;
 
     top: calc(100% + 5px);
