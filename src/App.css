@@ -6,8 +6,8 @@
 .spinner {
   background-color: navajowhite;
   border-radius: 50%;
-  width: 20vw;
-  height: 20vw;
+  width: 10vw;
+  height: 10vw;
   min-width: 100px;
   min-height: 100px;
 }

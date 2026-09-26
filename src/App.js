@@ -1,6 +1,6 @@
 import './App.css';
-import { useEffect, useState } from "react";
-import { videoDivider } from "./frameworks/videoDivider";
+import {useEffect, useState} from "react";
+import {videoDivider} from "./frameworks/videoDivider";
 import {transcribeAudio} from "./frameworks/transcribeAudio";
 
 function App() {
@@ -8,10 +8,18 @@ function App() {
     const [isSpinnerVisible, setSpinner] = useState(false);
     const [state, setState] = useState("pending");
     const [isVisibleError, setVisibleError] = useState(false);
-
+    const [transcription, setTranscription] = useState('');
+    const language = 'russian'
+    
     function handleFileChange(event) {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
+    }
+
+    async function transcribeAudioFun () {
+        const audioData = await videoDivider(file);
+
+        return await transcribeAudio(audioData, language);
     }
 
     async function transcribe() {
@@ -20,18 +28,26 @@ function App() {
                 setState("pending");
 
                 try {
+                    setSpinner(true);
                     const audio = await videoDivider(file);
 
-                    console.log(audio);
+                    console.log("Аудио получено");
+
+                    const text = await transcribeAudio(audio, language);
+
+                    setTranscription(text);
 
                     setState("fulfilled");
+                    setSpinner(false);
                 } catch (error) {
                     setState("rejected");
                     setVisibleError(true);
+                    setTimeout(() => setVisibleError(false), 5000);
                     console.error("Ошибка транскрипции:", error);
                 }
             } else {
-                transcribeAudio(file, setFile);
+
+                setTranscription(transcribeAudioFun())
             }
         }
     }
@@ -39,8 +55,8 @@ function App() {
     useEffect(() => {
         setSpinner(state === "pending");
         if (state === "fulfilled") {
-            transcribeAudio(file, setFile);
-            setSpinner(true)
+            setTranscription(transcribeAudioFun())
+            setSpinner(false)
         }
     }, [state]);
 
@@ -73,6 +89,7 @@ function App() {
             {isVisibleError &&
                 <h1>some error</h1>
             }
+            <h1>{transcription}</h1>
         </div>
     );
 }
