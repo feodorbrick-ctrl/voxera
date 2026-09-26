@@ -2,7 +2,7 @@ import { pipeline } from "@huggingface/transformers";
 
 let transcriber = null;
 
-async function getTranscriber(transcribeMode) {
+async function getTranscriber() {
     if (!transcriber) {
         transcriber = await pipeline(
             "automatic-speech-recognition",

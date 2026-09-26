@@ -12,7 +12,6 @@ function App() {
     const [isVisibleError, setVisibleError] = useState(false);
     const [transcription, setTranscription] = useState('');
     const [language, setLanguage] = useState('russian')
-    const [transcribeMode, setTranscribeMode] = useState('base');
 
     function handleFileChange(event) {
         const selectedFile = event.target.files[0];
@@ -28,7 +27,7 @@ function App() {
     async function transcribe() {
         setState("pending");
         if (file !== null) {
-            if (file.type.startsWith("video/mp4")) {
+            if (!file.type.startsWith("audio/wav")) {
 
                 try {
                     setSpinner(true);
@@ -57,6 +56,7 @@ function App() {
         }
         setState("rejected");
     }
+
     useEffect(() => {
         setSpinner(state === "pending");
         if (state === "fulfilled") {
@@ -85,13 +85,9 @@ function App() {
             <button onClick={transcribe}>
                 transcribe
             </button>
-
-            <div
-                className="spinner"
-                style={{
-                    display: isSpinnerVisible ? "block" : "none"
-                }}
-            />
+            {isSpinnerVisible &&
+                <div className="spinner"/>
+            }
             {isVisibleError &&
                 <h1>some error</h1>
             }
@@ -105,14 +101,6 @@ function App() {
             />
             <br/>
             <br/>
-            <div>
-                <p>the fast, the less effective</p>
-                <CustomSelect
-                    onChange={setTranscribeMode}
-                    value={transcribeMode}
-                    options={['tiny', 'base', 'small', 'medium']}
-                />
-            </div>
         </div>
     );
 }
