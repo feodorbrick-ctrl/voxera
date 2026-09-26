@@ -1,0 +1,92 @@
+.customSelect {
+    position: relative;
+    width: 200px;
+    font-family: Arial, sans-serif;
+}
+
+.customSelect__button {
+    width: 100%;
+    height: 45px;
+
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.customSelect__button:hover {
+    border-color: #999;
+}
+
+.customSelect__arrow {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+}
+
+.customSelect__arrow.open {
+    transform: rotate(180deg);
+}
+
+.customSelect__dropdown {
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 800px;
+    position: absolute;
+
+    top: calc(100% + 5px);
+    left: 0;
+
+    width: 100%;
+
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+
+    overflow-x: auto;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
+
+}
+
+.customSelect__option {
+    scroll-snap-align: end;
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: none;
+    background: white;
+
+    text-align: left;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.customSelect__option:hover {
+    background: #f2f2f2;
+}
+
+.customSelect__option.selected {
+    background: #e8e8e8;
+}
+
+.customSelect.disabled {
+    opacity: 0.6;
+}
+
+.customSelect.disabled .customSelect__button {
+    cursor: not-allowed;
+}

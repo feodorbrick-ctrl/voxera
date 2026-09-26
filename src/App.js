@@ -2,6 +2,8 @@ import './App.css';
 import {useEffect, useState} from "react";
 import {videoDivider} from "./frameworks/videoDivider";
 import {transcribeAudio} from "./frameworks/transcribeAudio";
+import CustomSelect from "./components/CustomSelect/customSelect";
+import {languages} from "./components/data/languages";
 
 function App() {
     const [file, setFile] = useState(null);
@@ -9,23 +11,23 @@ function App() {
     const [state, setState] = useState("pending");
     const [isVisibleError, setVisibleError] = useState(false);
     const [transcription, setTranscription] = useState('');
-    const language = 'russian'
-    
+    const [language, setLanguage] = useState('russian')
+
     function handleFileChange(event) {
         const selectedFile = event.target.files[0];
         setFile(selectedFile);
     }
 
-    async function transcribeAudioFun () {
+    async function transcribeAudioFun() {
         const audioData = await videoDivider(file);
 
         return await transcribeAudio(audioData, language);
     }
 
     async function transcribe() {
+        setState("pending");
         if (file !== null) {
             if (file.type.startsWith("video/mp4")) {
-                setState("pending");
 
                 try {
                     setSpinner(true);
@@ -40,16 +42,16 @@ function App() {
                     setState("fulfilled");
                     setSpinner(false);
                 } catch (error) {
-                    setState("rejected");
                     setVisibleError(true);
                     setTimeout(() => setVisibleError(false), 5000);
                     console.error("Ошибка транскрипции:", error);
                 }
             } else {
+                await setTranscription(transcribeAudioFun())
 
-                setTranscription(transcribeAudioFun())
             }
         }
+        setState("rejected");
     }
 
     useEffect(() => {
@@ -58,11 +60,12 @@ function App() {
             setTranscription(transcribeAudioFun())
             setSpinner(false)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
     useEffect(() => {
         setSpinner(false)
-    },file)
+    }, [file])
 
     return (
         <div className="App">
@@ -90,6 +93,12 @@ function App() {
                 <h1>some error</h1>
             }
             <h1>{transcription}</h1>
+            <CustomSelect
+                onChange={setLanguage}
+                placeholder='Select please a language of subtitles'
+                value={language}
+                options={languages}
+            />
         </div>
     );
 }
