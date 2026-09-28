@@ -4,6 +4,7 @@ import {videoDivider} from "./frameworks/videoDivider";
 import {transcribeAudio} from "./frameworks/transcribeAudio";
 import CustomSelect from "./components/CustomSelect/customSelect";
 import {languages} from "./components/data/languages";
+import Spinner from "./components/spinner/spinner";
 
 function App() {
     const [file, setFile] = useState(null);
@@ -72,35 +73,44 @@ function App() {
 
     return (
         <div className="App">
-            <input type="file" onChange={handleFileChange}/>
+            <div className='inputZone'>
+                <h1 className='input__text'>choose file</h1>
+                <input className='input' type="file" onChange={handleFileChange}/>
+            </div>
 
-            {file && (
-                <>
-                    <h1>name: {file.name}</h1>
-                    <h1>type: {file.type}</h1>
-                    <h1>size: {file.size}</h1>
-                </>
-            )}
+            <div className='infoZone'>
+                {file ?
+                    <div className='fileInfo'>
+                        <h1>name: {file.name}</h1>
+                        <h1>type: {file.type}</h1>
+                        <h1>size: {file.size}</h1>
+                    </div>
+                    :
+                    <div className='fileInfo'>
+                        <h1>name: choose file</h1>
+                        <h1>type: choose file</h1>
+                        <h1>size: choose file</h1>
+                    </div>
+                }
 
-            <button onClick={transcribe}>
+            </div>
+
+            <button className='transcribeBtn' onClick={transcribe}>
                 transcribe
             </button>
-            {isSpinnerVisible &&
-                <div className="spinner"/>
-            }
-            {isVisibleError &&
-                <h1>some error</h1>
-            }
+            <Spinner isSpinnerVisible={isSpinnerVisible}/>
             <h1>{transcription}</h1>
-            <br/><br/>
-            <CustomSelect
-                onChange={setLanguage}
-                placeholder='Select please a language of subtitles'
-                value={language}
-                options={languages}
-            />
-            <br/>
-            <br/>
+            <div className='infoZone'>
+                <CustomSelect
+                    onChange={setLanguage}
+                    placeholder='Select please a language of subtitles'
+                    value={language}
+                    options={languages}
+                />
+            </div>
+            {isVisibleError &&
+                <h1 className='error'>some error</h1>
+            }
         </div>
     );
 }

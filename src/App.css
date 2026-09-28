@@ -1,14 +1,84 @@
-.App {
-  display: grid;
-  justify-content: center;
-  font-family:  sans-serif;
+* {
+    font-family: Verdana, 'Andale Mono', monospace;
+    margin: 5px;
 }
 
-.spinner {
-  background-color: navajowhite;
-  border-radius: 50%;
-  width: 10vw;
-  height: 10vw;
-  min-width: 100px;
-  min-height: 100px;
+.App {
+    display: grid;
+    justify-content: center;
+    font-family: sans-serif;
+}
+
+.error {
+    color: red;
+    font-weight: 900;
+    position: fixed;
+    left: 43%;
+    top: 20%;
+    z-index: 3;
+}
+
+.infoZone {
+    border: grey solid 6px;
+    border-radius: 20px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+    margin: 2vw;
+    width: 60vw;
+    height: fit-content;
+    min-height: 20vh;
+    padding: 10px;
+    display: grid;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.transcribeBtn {
+    width: 80%;
+    height: auto;
+    padding: 10px;
+    border: grey solid 5px;
+    border-radius: 20px;
+    margin: auto;
+}
+
+.input {
+    width: 200px;
+    height: 200px;
+    border: grey solid 5px;
+    border-radius: 50%;
+    transition: all 0.5s;
+    color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.input[type='file']::file-selector-button {
+    display: none;
+}
+.input:active {
+    transform: scale(0.95);
+    filter: brightness(0.8);
+}
+
+.inputZone {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 20px auto;
+    width: 200px;
+    height: 200px;
+}
+
+.inputZone h1 {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    color: lightslategray;
+}
+
+.fileInfo {
+    height: fit-content;
 }

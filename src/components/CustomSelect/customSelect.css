@@ -42,7 +42,7 @@
     max-height: 300px;
     position: absolute;
 
-    top: calc(100% + 5px);
+    top: 50px;
     left: 0;
 
     width: 100%;
