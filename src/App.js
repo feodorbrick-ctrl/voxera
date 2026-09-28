@@ -99,7 +99,9 @@ function App() {
                 transcribe
             </button>
             <Spinner isSpinnerVisible={isSpinnerVisible}/>
-            <h1>{transcription}</h1>
+            <div className='infoZone'>
+                <h1>{transcription || 'chose file and click to transcribe button.'}</h1>
+            </div>
             <div className='infoZone'>
                 <CustomSelect
                     onChange={setLanguage}
@@ -107,6 +109,7 @@ function App() {
                     value={language}
                     options={languages}
                 />
+                <p>choose which a language of the transcribe file</p>
             </div>
             {isVisibleError &&
                 <h1 className='error'>some error</h1>
