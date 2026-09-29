@@ -100,6 +100,7 @@ function App() {
             </button>
             <Spinner isSpinnerVisible={isSpinnerVisible}/>
             <div className='infoZone'>
+                <span style={{color: 'red'}}>answer: </span>
                 <h1>{transcription || 'chose file and click to transcribe button.'}</h1>
             </div>
             <div className='infoZone'>
@@ -110,6 +111,8 @@ function App() {
                     options={languages}
                 />
                 <p>choose which a language of the transcribe file</p>
+                <br/>
+                <h2>if returns answer is not correct, try change language</h2>
             </div>
             {isVisibleError &&
                 <h1 className='error'>some error</h1>
